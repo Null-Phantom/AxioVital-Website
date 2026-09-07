@@ -204,151 +204,57 @@ nav,
 }
 
 /* ============================================================
-   QuantaForze Header Navbar Styling & Floating Glass Pill
+   AxioVital Header Navbar Styling (Clean Light Enterprise Header)
    ============================================================ */
-.quanta-navbar {
-  position: fixed;
+.axio-navbar {
+  position: sticky;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 100%;
   z-index: 1000;
-  height: 4.75rem;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  height: 4.75rem; /* ~76px */
+  background-color: #ffffff;
+  background-image: linear-gradient(to right, rgba(226, 232, 240, 0.25) 1px, transparent 1px);
+  background-size: 48px 100%;
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  pointer-events: auto;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.quanta-navbar.is-scrolled {
-  top: 1rem;
-  width: calc(100% - 2.5rem);
-  max-width: 1200px;
-  height: 3.75rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(28px) saturate(210%);
-  -webkit-backdrop-filter: blur(28px) saturate(210%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.95), inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+.axio-navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.6) 50%, transparent 100%);
+  z-index: 1001;
+  pointer-events: none;
 }
 
-.quanta-navbar .q-nav-container {
+.axio-navbar.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 4px 24px -6px rgba(15, 23, 42, 0.05);
+}
+
+.axio-navbar .axio-nav-container {
   width: 100%;
-  max-width: 1380px;
+  max-width: 80rem; /* max-w-7xl (1280px) */
+  height: 100%;
   margin: 0 auto;
-  padding: 0 2.25rem;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.quanta-navbar.is-scrolled .q-nav-container {
-  padding: 0 1.25rem;
-}
-
-.quanta-navbar .q-logo {
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  transition: transform 0.25s ease;
-}
-
-.quanta-navbar .q-logo:hover {
-  transform: scale(1.02);
-}
-
-.quanta-navbar .q-nav-right {
-  display: flex;
-  align-items: center;
-  gap: 2.25rem;
-}
-
-.quanta-navbar .q-nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-}
-
-.quanta-navbar .q-nav-link {
-  font-family: var(--font-inter), sans-serif;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: #2b2b2b;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  opacity: 0.85;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-.quanta-navbar .q-nav-link:hover {
-  opacity: 1;
-  color: #000000;
-}
-
-.quanta-navbar .q-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.quanta-navbar .q-btn-docs {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.45rem 1.25rem;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(43, 43, 43, 0.16);
-  border-radius: 9999px;
-  color: #2b2b2b;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.quanta-navbar .q-btn-docs:hover {
-  background: #ffffff;
-  border-color: rgba(43, 43, 43, 0.4);
-}
-
-.quanta-navbar .q-btn-get-started {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 0.48rem 1.35rem;
-  background: #2b2b2b;
-  color: #ffffff;
-  border: none;
-  border-radius: 9999px;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease;
-}
-
-.quanta-navbar .q-btn-get-started:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
-  background: #000000;
-}
-
-@media only screen and (max-width: 860px) {
-  .quanta-navbar .q-nav-menu {
-    display: none;
+@media (min-width: 1024px) {
+  .axio-navbar .axio-nav-container {
+    padding: 0 2rem;
   }
 }
+
