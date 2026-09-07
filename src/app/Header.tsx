@@ -3,104 +3,94 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
-  Menu, Search, ChevronDown, X, ChevronRight, Activity, Sparkles, 
-  Database, Layers, Code, Users, Building2, CreditCard, User, 
-  Stethoscope, Shield, ArrowRight, Globe
+  Menu, ChevronDown, X, ChevronRight, Activity, Database, Layers, Code, Building2, CreditCard, User, Stethoscope
 } from "lucide-react";
 
 export default function Header({ onOpenVideoModal }: { onOpenVideoModal?: () => void }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-200 ${
-      scrolled 
-        ? "bg-slate-950/95 backdrop-blur-md border-b border-white/10 shadow-xl" 
-        : "bg-slate-950 border-b border-white/5"
-    } text-white`}>
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+    <header className={`site-head quanta-navbar ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="q-nav-container">
         
-        {/* Brand Logo */}
-        <div className="flex items-center gap-8 shrink-0">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="h-8 w-8 rounded-lg bg-teal-500 flex items-center justify-center text-slate-950 font-extrabold shadow-sm group-hover:bg-teal-400 transition-colors">
-              <Activity className="h-5 w-5 text-slate-950" />
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-white font-display">
-              AXIOVITAL
-            </span>
-          </Link>
+        {/* Left: Logo & Brand */}
+        <Link href="/" className="q-logo group">
+          <div className="h-8 w-8 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+            <Activity className="h-4.5 w-4.5 text-sky-400" />
+          </div>
+          <span className="font-outfit text-lg font-bold tracking-tight text-slate-900">
+            AXIO<span className="text-blue-600 font-extrabold">VITAL</span>
+          </span>
+        </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1">
+        {/* Center/Right: Desktop Navigation Menu */}
+        <div className="q-nav-right">
+          <nav className="q-nav-menu">
             
             {/* Platform Dropdown */}
             <div className="relative" onMouseLeave={() => setOpenDropdown(null)}>
               <button 
                 onMouseEnter={() => setOpenDropdown("platform")}
                 onClick={() => setOpenDropdown(openDropdown === "platform" ? null : "platform")}
-                className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white rounded-md hover:bg-white/5 flex items-center gap-1 transition-colors cursor-pointer"
+                className="q-nav-link cursor-pointer"
               >
-                Platform <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                Platform <ChevronDown className="h-3.5 w-3.5 opacity-60" />
               </button>
 
               {openDropdown === "platform" && (
-                <div className="absolute top-full left-0 w-80 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <Link 
                     href="/axiovital" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <Building2 className="h-5 w-5 text-teal-400 mt-0.5 shrink-0" />
+                    <Building2 className="h-5 w-5 text-teal-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">AxioVital</div>
-                      <div className="text-[11px] text-slate-400">Hospital operating system for connected care</div>
+                      <div className="text-sm font-semibold text-slate-900">AxioVital</div>
+                      <div className="text-xs text-slate-500">Hospital operating system for connected care</div>
                     </div>
                   </Link>
                   <Link 
                     href="/axioid" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <User className="h-5 w-5 text-cyan-400 mt-0.5 shrink-0" />
+                    <User className="h-5 w-5 text-cyan-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">AxioID</div>
-                      <div className="text-[11px] text-slate-400">Persistent healthcare identity</div>
+                      <div className="text-sm font-semibold text-slate-900">AxioID</div>
+                      <div className="text-xs text-slate-500">Persistent healthcare identity</div>
                     </div>
                   </Link>
                   <Link 
                     href="/axiocard" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <CreditCard className="h-5 w-5 text-sky-400 mt-0.5 shrink-0" />
+                    <CreditCard className="h-5 w-5 text-sky-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">AxioCard</div>
-                      <div className="text-[11px] text-slate-400">NFC-powered patient identity & access</div>
+                      <div className="text-sm font-semibold text-slate-900">AxioCard</div>
+                      <div className="text-xs text-slate-500">NFC-powered patient identity & access</div>
                     </div>
                   </Link>
                   <Link 
                     href="/network" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <Layers className="h-5 w-5 text-blue-400 mt-0.5 shrink-0" />
+                    <Layers className="h-5 w-5 text-blue-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">Axio Network</div>
-                      <div className="text-[11px] text-slate-400">Connected provider infrastructure</div>
+                      <div className="text-sm font-semibold text-slate-900">Axio Network</div>
+                      <div className="text-xs text-slate-500">Connected provider infrastructure</div>
                     </div>
                   </Link>
                 </div>
@@ -112,112 +102,166 @@ export default function Header({ onOpenVideoModal }: { onOpenVideoModal?: () => 
               <button 
                 onMouseEnter={() => setOpenDropdown("solutions")}
                 onClick={() => setOpenDropdown(openDropdown === "solutions" ? null : "solutions")}
-                className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white rounded-md hover:bg-white/5 flex items-center gap-1 transition-colors cursor-pointer"
+                className="q-nav-link cursor-pointer"
               >
-                Solutions <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                Solutions <ChevronDown className="h-3.5 w-3.5 opacity-60" />
               </button>
 
               {openDropdown === "solutions" && (
-                <div className="absolute top-full left-0 w-80 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <Link 
                     href="/hospitals" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <Building2 className="h-5 w-5 text-teal-400 mt-0.5 shrink-0" />
+                    <Building2 className="h-5 w-5 text-teal-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">Hospitals & Health Networks</div>
-                      <div className="text-[11px] text-slate-400">Unify clinical and operational workflows</div>
+                      <div className="text-sm font-semibold text-slate-900">Hospitals & Health Networks</div>
+                      <div className="text-xs text-slate-500">Unify clinical and operational workflows</div>
                     </div>
                   </Link>
                   <Link 
                     href="/providers" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <Stethoscope className="h-5 w-5 text-cyan-400 mt-0.5 shrink-0" />
+                    <Stethoscope className="h-5 w-5 text-cyan-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">Doctors & Care Teams</div>
-                      <div className="text-[11px] text-slate-400">Access patient context without reconstruction</div>
+                      <div className="text-sm font-semibold text-slate-900">Doctors & Care Teams</div>
+                      <div className="text-xs text-slate-500">Access patient context without reconstruction</div>
                     </div>
                   </Link>
                   <Link 
                     href="/patients" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <User className="h-5 w-5 text-sky-400 mt-0.5 shrink-0" />
+                    <User className="h-5 w-5 text-sky-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">Patients & Families</div>
-                      <div className="text-[11px] text-slate-400">Carry your healthcare identity across providers</div>
+                      <div className="text-sm font-semibold text-slate-900">Patients</div>
+                      <div className="text-xs text-slate-500">Carry your healthcare identity across providers</div>
                     </div>
                   </Link>
                   <Link 
-                    href="/connected-healthcare" 
+                    href="/networks" 
                     onClick={() => setOpenDropdown(null)}
-                    className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-800/90 transition-colors"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
                   >
-                    <Globe className="h-5 w-5 text-blue-400 mt-0.5 shrink-0" />
+                    <Activity className="h-5 w-5 text-blue-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="text-xs font-bold text-white">Connected Healthcare</div>
-                      <div className="text-[11px] text-slate-400">Connect fragmented healthcare ecosystems</div>
+                      <div className="text-sm font-semibold text-slate-900">Healthcare Networks</div>
+                      <div className="text-xs text-slate-500">Connect fragmented healthcare ecosystems</div>
                     </div>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* Direct Navbar Links */}
-            <Link href="/documentation" className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white rounded-md hover:bg-white/5 transition-colors">
-              Developers & Docs
-            </Link>
-            <Link href="/pricing" className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white rounded-md hover:bg-white/5 transition-colors">
+            {/* Developers & Docs Dropdown */}
+            <div className="relative" onMouseLeave={() => setOpenDropdown(null)}>
+              <button 
+                onMouseEnter={() => setOpenDropdown("developers")}
+                onClick={() => setOpenDropdown(openDropdown === "developers" ? null : "developers")}
+                className="q-nav-link cursor-pointer"
+              >
+                Developers & Docs <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+              </button>
+
+              {openDropdown === "developers" && (
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-xl p-3 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <Link 
+                    href="/documentation" 
+                    onClick={() => setOpenDropdown(null)}
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
+                  >
+                    <Code className="h-5 w-5 text-blue-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <div className="text-sm font-semibold text-slate-900">Developer Documentation</div>
+                      <div className="text-xs text-slate-500">API guides, SDKs & FHIR reference</div>
+                    </div>
+                  </Link>
+                  <Link 
+                    href="/platform" 
+                    onClick={() => setOpenDropdown(null)}
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100/80 transition-colors group"
+                  >
+                    <Database className="h-5 w-5 text-emerald-600 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <div className="text-sm font-semibold text-slate-900">Platform Architecture</div>
+                      <div className="text-xs text-slate-500">Medical data engine & security</div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <Link href="/pricing" className="q-nav-link">
               Pricing
             </Link>
-            <Link href="/about" className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white rounded-md hover:bg-white/5 transition-colors">
+            <Link href="/about" className="q-nav-link">
               Company
             </Link>
-
           </nav>
-        </div>
 
-        {/* Right CTA Actions */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
-          <Link href="/contact" className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 transition-colors">
-            Sign in
-          </Link>
-          <Link 
-            href="/contact" 
-            className="px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-400 text-slate-950 font-extrabold text-xs transition-all shadow-sm flex items-center gap-1.5"
-          >
-            Book a demo <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
+          {/* Action Buttons */}
+          <div className="q-nav-actions">
+            <Link href="/signin" className="q-btn-docs hidden sm:inline-flex">
+              Sign in
+            </Link>
+            <button 
+              onClick={onOpenVideoModal}
+              className="q-btn-get-started"
+            >
+              <span>Book a demo</span>
+              <ChevronRight className="h-4 w-4 opacity-70" />
+            </button>
 
-        {/* Mobile Menu Button */}
-        <button 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-slate-300 hover:text-white"
-        >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+            {/* Mobile Hamburger Toggle Button */}
+            <button 
+              onClick={() => setHamburgerOpen(!hamburgerOpen)}
+              className="p-2 text-slate-800 hover:bg-slate-200/60 rounded-full transition-colors min-[861px]:hidden cursor-pointer"
+              aria-label="Toggle Navigation Menu"
+            >
+              {hamburgerOpen ? <X className="h-5.5 w-5.5" /> : <Menu className="h-5.5 w-5.5" />}
+            </button>
+          </div>
+
+        </div>
 
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-slate-900 border-b border-slate-800 p-4 space-y-3">
-          <Link href="/axiovital" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">AxioVital Platform</Link>
-          <Link href="/axioid" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">AxioID Identity</Link>
-          <Link href="/axiocard" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">AxioCard NFC</Link>
-          <Link href="/network" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">Axio Network</Link>
-          <Link href="/hospitals" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">Hospitals & Health Networks</Link>
-          <Link href="/providers" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">Doctors & Care Teams</Link>
-          <Link href="/patients" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">Patients & Families</Link>
-          <Link href="/connected-healthcare" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-white">Connected Healthcare</Link>
-          <Link href="/documentation" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-sm font-semibold text-teal-400">Developers & Docs</Link>
+      {/* Mobile Glassmorphic Drawer Menu */}
+      {hamburgerOpen && (
+        <div className="min-[861px]:hidden absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-2xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+          <Link href="/axiovital" onClick={() => setHamburgerOpen(false)} className="block py-2 text-base font-semibold text-slate-900 hover:text-blue-600">
+            Platform (AxioVital)
+          </Link>
+          <Link href="/hospitals" onClick={() => setHamburgerOpen(false)} className="block py-2 text-base font-semibold text-slate-900 hover:text-blue-600">
+            Solutions
+          </Link>
+          <Link href="/documentation" onClick={() => setHamburgerOpen(false)} className="block py-2 text-base font-semibold text-slate-900 hover:text-blue-600">
+            Developers & Docs
+          </Link>
+          <Link href="/pricing" onClick={() => setHamburgerOpen(false)} className="block py-2 text-base font-semibold text-slate-900 hover:text-blue-600">
+            Pricing
+          </Link>
+          <Link href="/about" onClick={() => setHamburgerOpen(false)} className="block py-2 text-base font-semibold text-slate-900 hover:text-blue-600">
+            Company
+          </Link>
+          <div className="pt-3 border-t border-slate-200/70 flex flex-col gap-2.5">
+            <Link href="/signin" onClick={() => setHamburgerOpen(false)} className="w-full text-center py-2.5 text-sm font-semibold text-slate-800 border border-slate-300 rounded-full hover:bg-slate-100">
+              Sign in
+            </Link>
+            <button 
+              onClick={() => { setHamburgerOpen(false); onOpenVideoModal?.(); }}
+              className="w-full text-center py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-full shadow-md hover:bg-black"
+            >
+              Book a demo
+            </button>
+          </div>
         </div>
       )}
     </header>
   );
 }
+
